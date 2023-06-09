@@ -32,6 +32,7 @@ def collate(
     add_image_features=True,
     image_feature_categories=["Granularity", "Texture", "ImageQuality", "Threshold"],
     printtoscreen=True,
+    fields_of_view="all",
 ):
     """Collate the CellProfiler-created CSVs into a single SQLite file by calling cytominer-database
 
@@ -65,6 +66,8 @@ def collate(
         The list of image feature groups to be used by add_image_features during aggregation
     printtoscreen: bool, optional, default True
         Whether or not to print output to the terminal
+    fields_of_view : list of int, str, default "all"
+        List of fields of view to aggregate.
     """
 
     from pycytominer.cyto_utils.cells import SingleCells
@@ -204,6 +207,7 @@ def collate(
         aggregation_operation="mean",
         add_image_features=add_image_features,
         image_feature_categories=image_feature_categories,
+        fields_of_view=fields_of_view,
     )
     database.aggregate_profiles(output_file=aggregated_file)
 
