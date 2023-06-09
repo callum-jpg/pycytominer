@@ -100,7 +100,11 @@ def collate(
 
             remote_backend_file = f"{aws_remote}/backend/{batch}/{plate}/{plate}.sqlite"
 
-            remote_aggregated_file = f"{aws_remote}/backend/{batch}/{plate}/{plate}.csv"
+            if fields_of_view != "all":
+                subsample = max(fields_of_view)
+                remote_aggregated_file = f"{aws_remote}/backend/{subsample}siteSubSample_{batch}/{plate}/{plate}.csv"
+            else:
+                remote_aggregated_file = f"{aws_remote}/backend/{batch}/{plate}/{plate}.csv"
 
             sync_cmd = f"aws s3 sync --exclude * --include */Cells.csv --include */Nuclei.csv --include */Cytoplasm.csv --include */Image.csv {remote_input_dir} {input_dir}"
             if printtoscreen:
